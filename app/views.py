@@ -38,16 +38,22 @@ class ProductDetailView(View):
         return render(request, 'app/productdetail.html',{'product':product})
 
 def add_to_cart(request):
- return render(request, 'app/addtocart.html')
+    user = request.user
+    product_id = request.GET.get('prod_id')
+    product = Product.objects.get(id = product_id)
+    reg = Cart(user = user, product = product)
+    reg.save()
+    return render(request, 'app/addtocart.html')
 
 def buy_now(request):
- return render(request, 'app/buynow.html')
+    return render(request, 'app/buynow.html')
 
 def profile(request):
- return render(request, 'app/profile.html')
+    return render(request, 'app/profile.html')
 
 def address(request):
- return render(request, 'app/address.html')
+    addr = Customer.objects.filter(user = request.user)
+    return render(request, 'app/address.html',{'addr':addr,'active':'btn-primary'})
 
 def orders(request):
  return render(request, 'app/orders.html')
