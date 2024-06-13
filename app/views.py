@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views import View
 from app.models import Customer,Product,OrderPlaced,Cart
 from app.forms import CustomerRegistrationForm, CustomerProfileForm
@@ -43,7 +43,31 @@ def add_to_cart(request):
     product = Product.objects.get(id = product_id)
     reg = Cart(user = user, product = product)
     reg.save()
-    return render(request, 'app/addtocart.html')
+    return redirect('/cart')
+
+def show_cart(request):
+    if request.user.is_authenticated:
+        user = request.user
+        cart = Cart.objects.filter(user=user)
+        cart_product = [p for p in Cart.objects.all() if p.user == user]
+        amount = 0.0
+        totalAmount = 0.0
+        shippingAmount = 70.0
+        
+        if cart_product:
+            for p in cart_product:
+                tempAmount = (p.quantity * p.product.discount_price)
+                amount += tempAmount
+                totalAmount += amount + shippingAmount
+            return render(request, 'app/addtocart.html',{'carts':cart, 'totalAmount':totalAmount, 'amount':amount})
+        else:
+            return render(request,'app/emptycart.html')
+    
+def remove_item(request,id):
+    if request.method == 'POST':
+        rem = Cart.objects.get(id = id)
+        rem.delete()
+        return redirect('/cart')
 
 def buy_now(request):
     return render(request, 'app/buynow.html')
