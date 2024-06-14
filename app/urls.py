@@ -9,9 +9,11 @@ from django.contrib.auth.views import LogoutView,LoginView,PasswordChangeView,Pa
 
 urlpatterns = [
     path('',ProductView.as_view(),name = 'home'),
-    path('remove-item/<int:id>/',views.remove_item,name = 'remove-item'),
+    path('remove-cart/',views.remove_cart,name = 'remove-cart'),
     path('product-detail/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
     path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
+    path('plus-cart/', views.plus_cart, name='plus-cart'),
+    path('minus-cart/', views.minus_cart, name='minus-cart'),
     path('cart/', views.show_cart, name='show_cart'),
     path('buy/', views.buy_now, name='buy-now'),
     path('profile/', views.ProfileView.as_view(), name='profile'),

@@ -2,8 +2,9 @@
 {% load static %}
 {% block title %}Empty Cart{% endblock title %}
 {% block main-content %}
-<div class="container my-5 text-center">
- <h3 class="alert alert-warning">Uh Oh! looks like your cart is empty</h3>
- <img src="{% static 'app\images\emptyCART.gif' %}" alt="" class="img-fluid img-thumbnail w-25">
+<div class="container my-5 text-center alrt alert-warning">
+ <h3 class="pt-3">Uh Oh! looks like your cart is empty.</h3><hr>
+ <h2 class="pb-2">Please add some product in your cart to proceed.</h2>
+ <img src="{% static 'app\images\emptyCART.gif' %}" alt="" class="img-fluid img-thumbnail w-25 py-2">
 </div>
 {% endblock main-content %}
