@@ -58,7 +58,7 @@
          <div>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             {% if request.user.is_authenticated %}
-            <button class="btn btn-warning" type="submit">V</button>
+            <button class="btn btn-warning" type="submit">{{ request.user.username|slice:":1"|upper }}</button>
            <li class="nav-item dropdown mx-2">
               <a class="nav-link dropdown-toggle text-white" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Hello, {{request.user.username|capfirst}}
@@ -76,7 +76,7 @@
               </ul>
             </li>
             <li class="nav-item mx-2">
-             <a href="{% url 'show_cart' %}" class="nav-link text-white"><span class="badge bg-danger">4</span> Cart </a>
+             <a href="{% url 'show_cart' %}" class="nav-link text-white"><span class="badge bg-danger">{{cart_items_count}}</span> Cart </a>
             </li>
             {% else %}
             <li class="nav-item mx-2">

@@ -9,6 +9,9 @@ from django.contrib.auth.views import LogoutView,LoginView,PasswordChangeView,Pa
 
 urlpatterns = [
     path('',ProductView.as_view(),name = 'home'),
+    path('empty-cart/',views.empty_cart,name = 'empty-cart'),
+    path('checkout/', views.checkout, name='checkout'),
+    path('payment-done/', views.payment_done, name='payment-done'),
     path('remove-cart/',views.remove_cart,name = 'remove-cart'),
     path('product-detail/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
     path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
@@ -21,7 +24,7 @@ urlpatterns = [
     path('orders/', views.orders, name='orders'),
     path('mobile/', views.mobile, name='mobile'),
     path('mobile/<slug:data>/', views.mobile, name='mobiledata'),
-    path('account/login/',LoginView.as_view(template_name = 'app/login.html',
+    path('accounts/login/',LoginView.as_view(template_name = 'app/login.html',
                                             authentication_form = LoginForm),
                                             name = 'login'),
     path('logout/',LogoutView.as_view(next_page = 'home'),name = 'logout'),
@@ -36,5 +39,4 @@ urlpatterns = [
     path('password-reset-complete/',PasswordResetCompleteView.as_view(template_name = 'app/password_reset_complete.html'),name = 'password_reset_complete'),
     path('password-reset-confirm/<uidb64>/<token>/',PasswordResetConfirmView.as_view(template_name = 'app/password_reset_confirm.html', form_class = MySetPasswordForm),name = 'password_reset_confirm'),
     path('registration/', CustomerRegistrationView.as_view(), name='customerregistration'),
-    path('checkout/', views.checkout, name='checkout'),
 ] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

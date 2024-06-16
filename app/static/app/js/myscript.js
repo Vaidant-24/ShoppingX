@@ -14,7 +14,7 @@ $('#slider1, #slider2, #slider3').owlCarousel({
             autoplay: true,
         },
         1000: {
-            items: 1,
+            items: 5,
             nav: true,
             loop: true,
             autoplay: true,
@@ -58,17 +58,42 @@ $(".minus-cart").click(function(){
 
 $(".remove-cart").click(function(){
     let id = $(this).attr("pid").toString();
-    element = this
+    let element = this;
+
     $.ajax({
         type: "GET",
         url: "/remove-cart",
         data: {
-            prod_id:id
+            prod_id: id
         },
         success: function(data){
-            document.getElementById("amount").innerText = data.amount
-            document.getElementById("totalAmount").innerText = data.totalAmount   
-            element.parentNode.parentNode.parentNode.parentNode.remove()
+            document.getElementById("amount").innerText = data.amount;
+            document.getElementById("totalAmount").innerText = data.totalAmount;
+            element.parentNode.parentNode.parentNode.parentNode.remove();
+
+            // Check if cart is empty
+            if (data.cart_empty) {
+                window.location.href = "/empty-cart";
+            }
         }
-    })
-})
+    });
+});
+
+$(".buy-now").click(function(){
+    let id = $(this).attr("pid").toString();
+
+    $.ajax({
+        type: "GET",
+        url: "/buy-now/",
+        data: {
+            prod_id: id
+        },
+        success: function(response){
+            if (response.status === 'success') {
+                window.location.href = "/checkout/";
+            } else {
+                alert(response.message);
+            }
+        }
+    });
+});
